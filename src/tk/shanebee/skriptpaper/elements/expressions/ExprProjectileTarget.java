@@ -29,7 +29,9 @@ import java.lang.reflect.Array;
 public class ExprProjectileTarget extends SimpleExpression<Entity> {
 
     static {
-        Skript.registerExpression(ExprProjectileTarget.class, Entity.class, ExpressionType.SIMPLE, "[the] projectile target [<(.+)>]");
+        if(Skript.isRunningMinecraft(1,11,2)) {
+            Skript.registerExpression(ExprProjectileTarget.class, Entity.class, ExpressionType.SIMPLE, "[the] projectile target [<(.+)>]");
+        }
     }
 
     @SuppressWarnings("null")

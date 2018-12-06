@@ -1,8 +1,13 @@
 package tk.shanebee.skriptpaper.elements.expressions;
 
+import ch.njol.skript.ScriptLoader;
+import ch.njol.skript.Skript;
 import ch.njol.skript.classes.Changer.ChangeMode;
 import ch.njol.skript.doc.*;
 import ch.njol.skript.expressions.base.SimplePropertyExpression;
+import ch.njol.skript.lang.Expression;
+import ch.njol.skript.lang.SkriptParser;
+import ch.njol.util.Kleenean;
 import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Turtle;
@@ -17,7 +22,9 @@ import javax.annotation.Nullable;
 @Since("1.1.0")
 public class ExprTurtleHome extends SimplePropertyExpression<LivingEntity, Location> {
     static {
-        register(ExprTurtleHome.class, Location.class, "home[s] [location[s]]", "livingentity");
+        if (Skript.isRunningMinecraft(1, 13, 2)) {
+            register(ExprTurtleHome.class, Location.class, "home[s] [location[s]]", "livingentity");
+        }
     }
 
     @Override

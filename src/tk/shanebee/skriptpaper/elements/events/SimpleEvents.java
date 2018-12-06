@@ -56,7 +56,7 @@ public class SimpleEvents {
                     .since("1.0.0");
             Skript.registerEvent("Entity Knockback", SimpleEvent.class, EntityKnockbackByEntityEvent.class, "entity knockback")
                     .description("Fired when an Entity is knocked back by the hit of another Entity. If this event is cancelled, the entity is not knocked back.")
-                    .examples("ToDo") // add examples here (figure out entity/player/victim/etc
+                    .examples("ToDo") // TODO add examples here (figure out entity/player/victim/etc
                     .requiredPlugins("Paper 1.12.2+")
                     .since("1.0.0");
             Skript.registerEvent("Experience Orb Merge", SimpleEvent.class, ExperienceOrbMergeEvent.class, "(experience|xp) orb merge")
@@ -92,7 +92,7 @@ public class SimpleEvents {
                     .since("1.0.0");
             Skript.registerEvent("Player Ready Arrow", SimpleEvent.class, PlayerReadyArrowEvent.class, "player ready arrow")
                     .description("Called when a player is firing a bow and the server is choosing an arrow to use.")
-                    .examples("ToDo") // need to figure out arrow stuff here
+                    .examples("ToDo") // TODO need to figure out arrow stuff here
                     .requiredPlugins("Paper 1.12.2+")
                     .since("1.0.0");
         }
@@ -139,7 +139,7 @@ public class SimpleEvents {
                     .since("1.0.0");
             Skript.registerEvent("Turtle Go Home", SimpleEvent.class, TurtleGoHomeEvent.class, "turtle go home")
                     .description("Fired when a Turtle decides to go home")
-                    .examples("ToDo") // dunno what to do here
+                    .examples("ToDo") // TODO dunno what to do here
                     .requiredPlugins("Paper 1.13.2+")
                     .since("1.0.0");
             Skript.registerEvent("Turtle Lay Egg", SimpleEvent.class, TurtleLayEggEvent.class, "turtle lay[s] egg")
