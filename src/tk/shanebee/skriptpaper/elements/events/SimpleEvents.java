@@ -56,7 +56,8 @@ public class SimpleEvents {
                     .since("1.0.0");
             Skript.registerEvent("Entity Knockback", SimpleEvent.class, EntityKnockbackByEntityEvent.class, "entity knockback")
                     .description("Fired when an Entity is knocked back by the hit of another Entity. If this event is cancelled, the entity is not knocked back.")
-                    .examples("ToDo") // TODO add examples here (figure out entity/player/victim/etc
+                    .examples("on entity knockback:", "" +
+                            "\tif event-entity is a cow:", "\t\tcancel event")
                     .requiredPlugins("Paper 1.12.2+")
                     .since("1.0.0");
             Skript.registerEvent("Experience Orb Merge", SimpleEvent.class, ExperienceOrbMergeEvent.class, "(experience|xp) orb merge")
@@ -65,13 +66,13 @@ public class SimpleEvents {
                             "\tcancel event")
                     .requiredPlugins("Paper 1.12.2+")
                     .since("1.0.0");
-            Skript.registerEvent("Witch Consume Potion", SimpleEvent.class, WitchConsumePotionEvent.class, "witch (consume|drink) potion")
+            Skript.registerEvent("Witch Consume Potion", SimpleEvent.class, WitchConsumePotionEvent.class, "witch (consume[s]|drink[s]) [a] potion")
                     .description("Fired when a witch consumes the potion in their hand to buff themselves.")
                     .examples("on witch consume potion",
                             "\tcancel event")
                     .requiredPlugins("Paper 1.12.2+")
                     .since("1.0.0");
-            Skript.registerEvent("Witch Throw Potion", SimpleEvent.class, WitchThrowPotionEvent.class, "witch throw potion")
+            Skript.registerEvent("Witch Throw Potion", SimpleEvent.class, WitchThrowPotionEvent.class, "witch throw[s] [a] potion")
                     .description("Fired when a witch throws a potion at a player")
                     .examples("on witch throw potion",
                             "\tcancel event")
