@@ -57,7 +57,6 @@ public class ExprArrowsStuck extends SimplePropertyExpression<LivingEntity, Inte
                     break;
                 case REMOVE_ALL:
                     assert false;
-
             }
         }
     }
