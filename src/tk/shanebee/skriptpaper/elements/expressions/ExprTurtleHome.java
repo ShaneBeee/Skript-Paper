@@ -19,7 +19,7 @@ import javax.annotation.Nullable;
 public class ExprTurtleHome extends SimplePropertyExpression<LivingEntity, Location> {
     static {
         if (Skript.isRunningMinecraft(1, 13, 2)) {
-            register(ExprTurtleHome.class, Location.class, "home[s] [location[s]]", "livingentity");
+            register(ExprTurtleHome.class, Location.class, "home[s] [location[s]]", "livingentities");
         }
     }
 
