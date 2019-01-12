@@ -2,6 +2,7 @@ package tk.shanebee.skriptpaper.elements.expressions;
 
 import ch.njol.skript.ScriptLoader;
 import ch.njol.skript.Skript;
+import ch.njol.skript.aliases.ItemType;
 import ch.njol.skript.classes.Changer.ChangeMode;
 import ch.njol.skript.doc.*;
 import ch.njol.skript.lang.Expression;
@@ -23,21 +24,24 @@ import javax.annotation.Nullable;
 @Events("Witch Throws Potion")
 @RequiredPlugins("Paper 1.12.2+")
 @Since("1.1.0")
-public class ExprThrownPotion extends SimpleExpression<ItemStack> {
+public class ExprThrownPotion extends SimpleExpression<ItemType> {
     static {
         if (Skript.isRunningMinecraft(1, 12, 2)) {
-            Skript.registerExpression(ExprThrownPotion.class, ItemStack.class, ExpressionType.SIMPLE,"[the] witch['s] thrown potion");
+            Skript.registerExpression(ExprThrownPotion.class, ItemType.class, ExpressionType.SIMPLE,"[the] witch['s] thrown potion");
         }
     }
 
     @Override
-    protected ItemStack[] get(Event e) {
-        return new ItemStack[] {((WitchThrowPotionEvent) e).getPotion()};
+    protected ItemType[] get(Event e) {
+        //return new ItemType[] {((WitchThrowPotionEvent) e).getPotion()};
+        ItemStack item = ((WitchThrowPotionEvent) e).getPotion();
+        ItemType it = new ItemType(item);
+        return new ItemType[] {it};
     }
 
     public Class<?>[] acceptChange(final ChangeMode mode) {
         if (mode == ChangeMode.SET)
-            return new Class[] {ItemStack.class};
+            return new Class[] {ItemType.class};
         return null;
     }
 
@@ -52,11 +56,13 @@ public class ExprThrownPotion extends SimpleExpression<ItemStack> {
 
     @Override
     public void change(final Event e, final @Nullable Object[] delta, final ChangeMode mode) {
-        ItemStack item = delta == null ? null : ((ItemStack) delta[0]);
+        //ItemStack item = delta == null ? null : ((ItemStack) delta[0]);
+        ItemType item = delta == null ? null : ((ItemType) delta[0]);
 
         switch (mode) {
             case SET:
-                ((WitchThrowPotionEvent) e).setPotion(item);
+                if (item != null) {
+                ((WitchThrowPotionEvent) e).setPotion(item.getRandom()); }
                 break;
             case REMOVE:
             case ADD:
@@ -68,8 +74,8 @@ public class ExprThrownPotion extends SimpleExpression<ItemStack> {
     }
 
     @Override
-    public Class<? extends ItemStack> getReturnType() {
-        return ItemStack.class;
+    public Class<? extends ItemType> getReturnType() {
+        return ItemType.class;
     }
 
     @Override
