@@ -19,7 +19,7 @@ import javax.annotation.Nullable;
 public class ExprEntityOrigin extends SimplePropertyExpression<Entity, Location> {
     static {
         if (Skript.isRunningMinecraft(1, 13, 2)) {
-            register(ExprEntityOrigin.class, Location.class, "origin[al] [location]", "entity");
+            register(ExprEntityOrigin.class, Location.class, "origin[al] [location]", "entities");
         } }
 
     @Override
