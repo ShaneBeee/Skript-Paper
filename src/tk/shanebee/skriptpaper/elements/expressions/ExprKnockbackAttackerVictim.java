@@ -17,7 +17,7 @@ import javax.annotation.Nullable;
 
 @Name("Knockback Attacker/Victim")
 @Description("The attacker/victim in an entity knockback event")
-@Examples({"on entity knockback:", "\tif attacker is a player:", "\t\tif victim is a sheep:", "\t\t\tcancel event"})
+@Examples({"on entity knockback:", "\tif knockback attacker is a player:", "\t\tif knockback victim is a sheep:", "\t\t\tcancel event"})
 @RequiredPlugins("Paper 1.12.2+")
 @Since("1.1.0")
 public class ExprKnockbackAttackerVictim extends SimpleExpression<Entity> {
@@ -82,6 +82,6 @@ public class ExprKnockbackAttackerVictim extends SimpleExpression<Entity> {
 
     @Override
     public String toString(Event event, boolean b) {
-        return null;
+        return (ent == 1 ? "knockback victim" : "knockback attacker");
     }
 }
