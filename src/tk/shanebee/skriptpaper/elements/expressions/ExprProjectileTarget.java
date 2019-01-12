@@ -30,7 +30,7 @@ public class ExprProjectileTarget extends SimpleExpression<Entity> {
 
     static {
         if(Skript.isRunningMinecraft(1,11,2)) {
-            Skript.registerExpression(ExprProjectileTarget.class, Entity.class, ExpressionType.SIMPLE, "[the] projectile target [<(.+)>]");
+            Skript.registerExpression(ExprProjectileTarget.class, Entity.class, ExpressionType.SIMPLE, "[the] projectile target");
         }
     }
 
