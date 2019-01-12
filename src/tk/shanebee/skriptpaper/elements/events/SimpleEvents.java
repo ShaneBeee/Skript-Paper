@@ -1,7 +1,10 @@
 package tk.shanebee.skriptpaper.elements.events;
 
 import ch.njol.skript.Skript;
+import ch.njol.skript.aliases.ItemType;
 import ch.njol.skript.lang.util.SimpleEvent;
+import ch.njol.skript.registrations.EventValues;
+import ch.njol.skript.util.Getter;
 import com.destroystokyo.paper.event.block.AnvilDamagedEvent;
 import com.destroystokyo.paper.event.block.BeaconEffectEvent;
 import com.destroystokyo.paper.event.block.TNTPrimeEvent;
@@ -10,6 +13,10 @@ import com.destroystokyo.paper.event.player.PlayerArmorChangeEvent;
 import com.destroystokyo.paper.event.player.PlayerElytraBoostEvent;
 import com.destroystokyo.paper.event.player.PlayerPickupExperienceEvent;
 import com.destroystokyo.paper.event.player.PlayerReadyArrowEvent;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
+import org.bukkit.inventory.ItemStack;
 
 public class SimpleEvents {
 
@@ -20,6 +27,12 @@ public class SimpleEvents {
                 .examples("ToDo") // to do
                 .requiredPlugins("Paper 1.9+")
                 .since("1.0.0");
+        EventValues.registerEventValue(BeaconEffectEvent.class, Player.class, new Getter<Player, BeaconEffectEvent>() {
+            @Override
+            public Player get(BeaconEffectEvent e) {
+                return e.getPlayer();
+            }
+        }, 0);
 
         // 1.10.2+ EVENTS
         if (Skript.isRunningMinecraft(1, 10, 2)) {
@@ -42,8 +55,19 @@ public class SimpleEvents {
                             "\t\tcancel event")
                     .requiredPlugins("Paper 1.11.2+")
                     .since("1.0.0");
+            EventValues.registerEventValue(ProjectileCollideEvent.class, Entity.class, new Getter<Entity, ProjectileCollideEvent>() {
+                @Override
+                public Entity get(ProjectileCollideEvent e) {
+                    return e.getCollidedWith();
+                }
+            }, 0);
+            EventValues.registerEventValue(ProjectileCollideEvent.class, Projectile.class, new Getter<Projectile, ProjectileCollideEvent>() {
+                @Override
+                public Projectile get(ProjectileCollideEvent e) {
+                    return e.getEntity();
+                }
+            }, 0);
         }
-
 
         // 1.12.2+ EVENTS
         if (Skript.isRunningMinecraft(1, 12, 2)) {
@@ -54,6 +78,18 @@ public class SimpleEvents {
                             "\tcancel event")
                     .requiredPlugins("Paper 1.12.2+")
                     .since("1.0.0");
+            EventValues.registerEventValue(EndermanAttackPlayerEvent.class, Player.class, new Getter<Player, EndermanAttackPlayerEvent>() {
+                @Override
+                public Player get(EndermanAttackPlayerEvent e) {
+                    return e.getPlayer();
+                }
+            }, 0);
+            EventValues.registerEventValue(EndermanAttackPlayerEvent.class, Entity.class, new Getter<Entity, EndermanAttackPlayerEvent>() {
+                @Override
+                public Entity get(EndermanAttackPlayerEvent e) {
+                    return e.getEntity();
+                }
+            }, 0);
             Skript.registerEvent("Entity Knockback", SimpleEvent.class, EntityKnockbackByEntityEvent.class, "entity knockback")
                     .description("Fired when an Entity is knocked back by the hit of another Entity. If this event is cancelled, the entity is not knocked back.")
                     .examples("on entity knockback:", "" +
@@ -72,12 +108,28 @@ public class SimpleEvents {
                             "\tcancel event")
                     .requiredPlugins("Paper 1.12.2+")
                     .since("1.0.0");
+            EventValues.registerEventValue(WitchConsumePotionEvent.class, ItemType.class, new Getter<ItemType, WitchConsumePotionEvent>() {
+                @Override
+                public ItemType get(WitchConsumePotionEvent e) {
+                    ItemStack item = e.getPotion();
+                    ItemType type = new ItemType(item);
+                    return type;
+                }
+            }, 0);
             Skript.registerEvent("Witch Throw Potion", SimpleEvent.class, WitchThrowPotionEvent.class, "witch throw[s] [a] potion")
                     .description("Fired when a witch throws a potion at a player")
                     .examples("on witch throw potion",
                             "\tcancel event")
                     .requiredPlugins("Paper 1.12.2+")
                     .since("1.0.0");
+            EventValues.registerEventValue(WitchThrowPotionEvent.class, ItemType.class, new Getter<ItemType, WitchThrowPotionEvent>() {
+                @Override
+                public ItemType get(WitchThrowPotionEvent e) {
+                    ItemStack item = e.getPotion();
+                    ItemType it = new ItemType(item);
+                    return it;
+                }
+            }, 0);
             Skript.registerEvent("Player Change Armor", SimpleEvent.class, PlayerArmorChangeEvent.class, "player change armor")
                     .description("Called when the player themselves change their armor items")
                     .examples("on player change armor:",
@@ -85,6 +137,30 @@ public class SimpleEvents {
                             "\tset helmet of player to pumpkin")
                     .requiredPlugins("Paper 1.12.2+")
                     .since("1.0.0");
+            EventValues.registerEventValue(PlayerArmorChangeEvent.class, ItemType.class, new Getter<ItemType, PlayerArmorChangeEvent>() {
+                @Override
+                public ItemType get(PlayerArmorChangeEvent e) {
+                    ItemStack item = e.getOldItem();
+                    if (item != null) return new ItemType(item);
+                    return null;
+                }
+            }, -1);
+            EventValues.registerEventValue(PlayerArmorChangeEvent.class, ItemType.class, new Getter<ItemType, PlayerArmorChangeEvent>() {
+                @Override
+                public ItemType get(PlayerArmorChangeEvent e) {
+                    ItemStack item = e.getNewItem();
+                    if (item != null) return new ItemType(item);
+                    return null;
+                }
+            }, 0);
+            EventValues.registerEventValue(PlayerArmorChangeEvent.class, ItemType.class, new Getter<ItemType, PlayerArmorChangeEvent>() {
+                @Override
+                public ItemType get(PlayerArmorChangeEvent e) {
+                    ItemStack item = e.getNewItem();
+                    if (item != null) return new ItemType(item);
+                    return null;
+                }
+            }, 1);
             Skript.registerEvent("Player Pickup Experience Orb", SimpleEvent.class, PlayerPickupExperienceEvent.class, "player pickup (experience|xp) [orb]")
                     .description("Fired when a player is attempting to pick up an experience orb")
                     .examples("on player pickup xp:",
@@ -96,6 +172,12 @@ public class SimpleEvents {
                     .examples("ToDo") // TODO need to figure out arrow stuff here
                     .requiredPlugins("Paper 1.12.2+")
                     .since("1.0.0");
+            EventValues.registerEventValue(PlayerReadyArrowEvent.class, ItemType.class, new Getter<ItemType, PlayerReadyArrowEvent>() {
+                @Override
+                public ItemType get(PlayerReadyArrowEvent e) {
+                    return new ItemType(e.getArrow());
+                }
+            }, 0);
         }
 
 
@@ -164,10 +246,7 @@ public class SimpleEvents {
 
 
         }
-
-
-
-
     }
+
 
 }
