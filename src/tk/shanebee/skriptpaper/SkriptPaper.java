@@ -12,7 +12,7 @@ public class SkriptPaper extends JavaPlugin {
 
     SkriptPaper instance;
     SkriptAddon addon;
-    private String prefix = "[" + this.getDescription().getName() + "] ";
+    private String prefix = ChatColor.GRAY + "[" + ChatColor.AQUA + this.getDescription().getName() + ChatColor.GRAY +  "] ";
 
     @Override
     public void onEnable() {
@@ -25,33 +25,45 @@ public class SkriptPaper extends JavaPlugin {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                getLogger().info(ChatColor.GREEN + "Successfully enabled");
+                sendConsole(ChatColor.GREEN + "Successfully enabled");
+                if (getDescription().getVersion().contains("Beta")) {
+                    sendConsole(ChatColor.YELLOW + "This is a Beta build and may be unstable");
+                }
             } else {
-                Bukkit.getConsoleSender().sendMessage(prefix + ChatColor.RED + "****************************************");
-                Bukkit.getConsoleSender().sendMessage(prefix + ChatColor.RED + "*                                      *");
-                Bukkit.getConsoleSender().sendMessage(prefix + ChatColor.RED + "*" + ChatColor.GOLD + "    You must run Paper server for     " + ChatColor.RED + "*");
-                Bukkit.getConsoleSender().sendMessage(prefix + ChatColor.RED + "*" + ChatColor.GOLD + "        Skript-Paper to work          " + ChatColor.RED + "*");
-                Bukkit.getConsoleSender().sendMessage(prefix + ChatColor.RED + "*                                      *");
-                Bukkit.getConsoleSender().sendMessage(prefix + ChatColor.RED + "*" + ChatColor.GOLD + "    More info can be found here:      " + ChatColor.RED + "*");
-                Bukkit.getConsoleSender().sendMessage(prefix + ChatColor.RED + "*" + ChatColor.GOLD + "        https://papermc.io            " + ChatColor.RED + "*");
-                Bukkit.getConsoleSender().sendMessage(prefix + ChatColor.RED + "*                                      *");
-                Bukkit.getConsoleSender().sendMessage(prefix + ChatColor.RED + "****************************************");
+                sendError("****************************************");
+                sendError("*                                      *");
+                sendError("*" + ChatColor.GOLD + "    You must run Paper server for     " + ChatColor.RED + "*");
+                sendError("*" + ChatColor.GOLD + "        Skript-Paper to work          " + ChatColor.RED + "*");
+                sendError("*                                      *");
+                sendError("*" + ChatColor.GOLD + "    More info can be found here:      " + ChatColor.RED + "*");
+                sendError("*" + ChatColor.GOLD + "        https://papermc.io            " + ChatColor.RED + "*");
+                sendError("*                                      *");
+                sendError("****************************************");
                 Bukkit.getPluginManager().disablePlugin(this);
-                Bukkit.getConsoleSender().sendMessage(prefix + ChatColor.RED + "Disabled");
+                sendError("Disabled");
             }
         } else {
-            Bukkit.getConsoleSender().sendMessage(prefix + ChatColor.RED + "Dependency Skript was not found");
+            sendError("Dependency Skript was not found");
             Bukkit.getPluginManager().disablePlugin(this);
+            sendError("Disabled");
         }
     }
 
-    private static boolean isRunningPaper() {
+    private boolean isRunningPaper() {
         try {
             Class.forName("co.aikar.timings.Timing");
             return true;
         } catch (final ClassNotFoundException e) {
             return false;
         }
+    }
+
+    private void sendConsole(String msg) {
+        Bukkit.getConsoleSender().sendMessage(prefix + msg);
+    }
+
+    private void sendError(String msg) {
+        Bukkit.getConsoleSender().sendMessage(prefix + ChatColor.RED + msg);
     }
 
 }
