@@ -13,10 +13,12 @@ import com.destroystokyo.paper.event.player.PlayerArmorChangeEvent;
 import com.destroystokyo.paper.event.player.PlayerElytraBoostEvent;
 import com.destroystokyo.paper.event.player.PlayerPickupExperienceEvent;
 import com.destroystokyo.paper.event.player.PlayerReadyArrowEvent;
+import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffectType;
 
 public class SimpleEvents {
 
@@ -33,6 +35,12 @@ public class SimpleEvents {
                 return e.getPlayer();
             }
         }, 0);
+        EventValues.registerEventValue(BeaconEffectEvent.class, PotionEffectType.class, new Getter<PotionEffectType, BeaconEffectEvent>() {
+            @Override
+            public PotionEffectType get(BeaconEffectEvent e) {
+                return e.getEffect().getType();
+            }
+        }, 0);
 
         // 1.10.2+ EVENTS
         if (Skript.isRunningMinecraft(1, 10, 2)) {
@@ -43,6 +51,12 @@ public class SimpleEvents {
                             "\t\tspawn 3 zombie pigmen at event-location")
                     .requiredPlugins("Paper 1.10.2+")
                     .since("1.0.0");
+            EventValues.registerEventValue(EntityZapEvent.class, Location.class, new Getter<Location, EntityZapEvent>() {
+                @Override
+                public Location get(EntityZapEvent e) {
+                    return e.getEntity().getLocation();
+                }
+            }, 0);
         }
 
         // 1.11.2+ EVENTS
@@ -96,6 +110,7 @@ public class SimpleEvents {
                             "\tif event-entity is a cow:", "\t\tcancel event")
                     .requiredPlugins("Paper 1.12.2+")
                     .since("1.0.0");
+            // TODO more event values for Entity Knockback
             Skript.registerEvent("Experience Orb Merge", SimpleEvent.class, ExperienceOrbMergeEvent.class, "(experience|xp) orb merge")
                     .description("Fired anytime the server is about to merge 2 experience orbs into one")
                     .examples("on xp merge:",
@@ -189,6 +204,12 @@ public class SimpleEvents {
                             "\tcancel event")
                     .requiredPlugins("Paper 1.13.2+")
                     .since("1.0.0");
+            EventValues.registerEventValue(AnvilDamagedEvent.class, Location.class, new Getter<Location, AnvilDamagedEvent>() {
+                @Override
+                public Location get(AnvilDamagedEvent e) {
+                    return e.getInventory().getLocation();
+                }
+            }, 0);
             Skript.registerEvent("TNT Primed", SimpleEvent.class, TNTPrimeEvent.class, "tnt prime[d]")
                     .description("Called when TNT block is about to turn into TNTPrimed")
                     .examples("on tnt prime:",
@@ -243,6 +264,12 @@ public class SimpleEvents {
                             "\tpush player forward at speed 50")
                     .requiredPlugins("Paper 1.13.2+")
                     .since("1.0.0");
+            EventValues.registerEventValue(PlayerElytraBoostEvent.class, ItemType.class, new Getter<ItemType, PlayerElytraBoostEvent>() {
+                @Override
+                public ItemType get(PlayerElytraBoostEvent e) {
+                    return new ItemType(e.getItemStack());
+                }
+            }, 0);
 
 
         }
