@@ -1,6 +1,6 @@
 main: tk.shanebee.skriptpaper.SkriptPaper
 name: Skript-Paper
-version: 1.2.0
+version: 1.2.0-Beta1
 author: ShaneBee
 website: https://github.com/ShaneBeee/Skript-Paper
 description: Add more Skript syntaxes using the PaperAPI
