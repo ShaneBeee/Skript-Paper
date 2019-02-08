@@ -17,6 +17,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
+import org.bukkit.event.player.PlayerShearEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
@@ -39,6 +40,17 @@ public class SimpleEvents {
             @Override
             public PotionEffectType get(BeaconEffectEvent e) {
                 return e.getEffect().getType();
+            }
+        }, 0);
+
+        Skript.registerEvent("Shear Entity", SimpleEvent.class, PlayerShearEntityEvent.class, "[player] shear entity")
+                .description("Called when a player shears an entity [Does not require Paper]")
+                .examples("on player shear entity:")
+                .since("1.3.0");
+        EventValues.registerEventValue(PlayerShearEntityEvent.class, Player.class, new Getter<Player, PlayerShearEntityEvent>() {
+            @Override
+            public Player get(PlayerShearEntityEvent e) {
+                return e.getPlayer();
             }
         }, 0);
 
